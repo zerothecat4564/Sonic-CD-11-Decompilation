@@ -336,17 +336,17 @@ void InitUserdata()
     FileIO *file = fOpen(buffer, "rb");
     IniParser ini;
     if (!file) {
-        ini.SetBool("Dev", "DevMenu", Engine.devMenu = false);
-        ini.SetBool("Dev", "EngineDebugMode", engineDebugMode = false);
+        ini.SetBool("Dev", "DevMenu", Engine.devMenu = true);
+        ini.SetBool("Dev", "EngineDebugMode", engineDebugMode = true);
         ini.SetBool("Dev", "TxtScripts", forceUseScripts = false);
         forceUseScripts_Config = forceUseScripts;
         ini.SetInteger("Dev", "StartingCategory", Engine.startList = 0);
         ini.SetInteger("Dev", "StartingScene", Engine.startStage = 0);
-        ini.SetInteger("Dev", "FastForwardSpeed", Engine.fastForwardSpeed = 8);
+        ini.SetInteger("Dev", "FastForwardSpeed", Engine.fastForwardSpeed = 1);
 #if RETRO_PLATFORM == RETRO_WINDOWS
-        ini.SetBool("Dev", "UseSteamDir", Engine.useSteamDir = false);
+        ini.SetBool("Dev", "UseSteamDir", Engine.useSteamDir = true);
 #endif
-        ini.SetBool("Dev", "UseHQModes", Engine.useHQModes = true);
+        ini.SetBool("Dev", "UseHQModes", Engine.useHQModes = false);
         sprintf(Engine.dataFile, "%s", "Data.rsdk");
         ini.SetString("Dev", "DataFile", Engine.dataFile);
 
@@ -357,13 +357,13 @@ void InitUserdata()
         ini.SetInteger("Game", "GameType", Engine.gameTypeID = 0);
         ini.SetInteger("Game", "OriginalControls", controlMode = -1);
         ini.SetBool("Game", "DisableTouchControls", disableTouchControls = false);
-        ini.SetInteger("Game", "DisableFocusPause", disableFocusPause = 0);
+        ini.SetInteger("Game", "DisableFocusPause", disableFocusPause = 2);
         disableFocusPause_Config = disableFocusPause;
 
-        ini.SetBool("Window", "FullScreen", Engine.startFullScreen = DEFAULT_FULLSCREEN);
+        ini.SetBool("Window", "FullScreen", Engine.startFullScreen = true);
         ini.SetBool("Window", "Borderless", Engine.borderless = false);
         ini.SetBool("Window", "VSync", Engine.vsync = false);
-        ini.SetInteger("Window", "ScalingMode", Engine.scalingMode = 0);
+        ini.SetInteger("Window", "ScalingMode", Engine.scalingMode = 1);
         ini.SetInteger("Window", "WindowScale", Engine.windowScale = 2);
         ini.SetInteger("Window", "ScreenWidth", SCREEN_XSIZE = DEFAULT_SCREEN_XSIZE);
         SCREEN_XSIZE_CONFIG = SCREEN_XSIZE;
@@ -388,8 +388,10 @@ void InitUserdata()
         ini.SetInteger("Keyboard 1", "C", inputDevice[INPUT_BUTTONC].keyMappings = SDL_SCANCODE_C);
         ini.SetInteger("Keyboard 1", "Start", inputDevice[INPUT_START].keyMappings = SDL_SCANCODE_RETURN);
 
-        ini.SetComment("Controller 1", "IC1Comment",
-                       "Controller Mappings for P1 (Based on: https://github.com/libsdl-org/sdlwiki/blob/main/SDL2/SDL_GameControllerButton.mediawiki)");
+        ini.SetComment("Controller 1", "IC1CommentA", "Controller Mappings for P1 Based on 8BitDo's M30 Sega Genesis gamepad in Direct Input Mode (turn the controller on by holding B and pressing Start) are A=10, B=1, C=0");
+		ini.SetComment("Controller 1", "IC1CommentB", "If using an 8BitDo M30 in X-Input Mode then A=23, B=1, C=0 (running the controller in X-Input Mode causes lag/delays on the D-pad");
+		ini.SetComment("Controller 1", "IC1CommentC", "For non Sega Genesis controllers, A=0, B=1, C=2");
+        ini.SetComment("Controller 1", "IC1Comment", "For more info see: https://wiki.libsdl.org/SDL_GameControllerButton)");
         ini.SetInteger("Controller 1", "Up", inputDevice[INPUT_UP].contMappings = SDL_CONTROLLER_BUTTON_DPAD_UP);
         ini.SetInteger("Controller 1", "Down", inputDevice[INPUT_DOWN].contMappings = SDL_CONTROLLER_BUTTON_DPAD_DOWN);
         ini.SetInteger("Controller 1", "Left", inputDevice[INPUT_LEFT].contMappings = SDL_CONTROLLER_BUTTON_DPAD_LEFT);
@@ -451,7 +453,7 @@ void InitUserdata()
         if (!ini.GetInteger("Dev", "StartingScene", &Engine.startStage))
             Engine.startStage = 0;
         if (!ini.GetInteger("Dev", "FastForwardSpeed", &Engine.fastForwardSpeed))
-            Engine.fastForwardSpeed = 8;
+            Engine.fastForwardSpeed = 1;
 #if RETRO_PLATFORM == RETRO_WINDOWS
         if (!ini.GetBool("Dev", "UseSteamDir", &Engine.useSteamDir))
             Engine.useSteamDir = false;
@@ -476,7 +478,7 @@ void InitUserdata()
         if (!ini.GetBool("Game", "DisableTouchControls", &disableTouchControls))
             disableTouchControls = false;
         if (!ini.GetInteger("Game", "DisableFocusPause", &disableFocusPause))
-            disableFocusPause = 0;
+            disableFocusPause = 2;
         disableFocusPause_Config = disableFocusPause;
 
         int platype = -1;
@@ -485,7 +487,7 @@ void InitUserdata()
             if (!platype)
                 Engine.gamePlatform = "Standard";
             else if (platype == 1)
-                Engine.gamePlatform = "Mobile";
+                Engine.gamePlatform = "Standard";
         }
 
         if (!ini.GetBool("Window", "FullScreen", &Engine.startFullScreen))
@@ -768,7 +770,7 @@ void WriteSettings()
 #endif
     ini.SetComment(
         "Dev", "UseHQComment",
-        "Determines if applicable rendering modes (such as 3D floor from special stages) will render in \"High Quality\" mode or standard mode");
+        "Determines if applicable rendering modes (such as 3D floor from special stages) will render in \"High Quality\" mode or standard mode - Note: Disables Linear Scaling");
     ini.SetBool("Dev", "UseHQModes", Engine.useHQModes);
 
     ini.SetComment("Dev", "DataFileComment", "Determines what RSDK file will be loaded");
@@ -783,7 +785,7 @@ void WriteSettings()
     ini.SetComment("Game", "DTCtrlComment", "Determines if the game should hide the touch controls UI");
     ini.SetBool("Game", "DisableTouchControls", disableTouchControls);
     ini.SetComment("Game", "DFPMenuComment",
-                   "Handles pausing behaviour when focus is lost\n; 0 = Game focus enabled, engine focus enabled\n; 1 = Game focus enabled, engine focus disabled\n; 2 = Game focus disabled, engine focus disabled");
+	"Handles pausing behaviour when focus is lost\n; 0 = Game focus enabled, engine focus enabled\n; 1 = Game focus enabled, engine focus disabled\n; 2 = Game focus disabled, engine focus disabled");
     ini.SetInteger("Game", "DisableFocusPause", disableFocusPause_Config);
     ini.SetComment("Game", "PlatformComment", "The platform type. 0 is standard (PC/Console), 1 is mobile");
     ini.SetInteger("Game", "Platform", !StrComp(Engine.gamePlatform, "Standard"));
@@ -793,13 +795,13 @@ void WriteSettings()
     ini.SetComment("Window", "BLComment", "Determines if the window will be borderless or not");
     ini.SetBool("Window", "Borderless", Engine.borderless);
     ini.SetComment("Window", "VSComment",
-                   "Determines if VSync will be active or not (not recommended as the engine is built around running at 60 FPS)");
+                   "Determines if VSync will be active or not (enable to fix screen tearing, disable to fix FPS being higher than 60fps)");
     ini.SetBool("Window", "VSync", Engine.vsync);
     ini.SetComment("Window", "SMComment", "Determines what scaling is used. 0 is nearest neighbour, 1 or higher is linear.");
     ini.SetInteger("Window", "ScalingMode", Engine.scalingMode);
     ini.SetComment("Window", "WSComment", "The window size multiplier");
     ini.SetInteger("Window", "WindowScale", Engine.windowScale);
-    ini.SetComment("Window", "SWComment", "How wide the base screen will be in pixels");
+    ini.SetComment("Window", "SWComment", "How wide the base screen will be in pixels - 426 is 16x9, 400 is the Steam width, 384 is 16x10, and 320 is 4x3");
     ini.SetInteger("Window", "ScreenWidth", SCREEN_XSIZE_CONFIG);
     ini.SetComment("Window", "RRComment", "Determines the target FPS");
     ini.SetInteger("Window", "RefreshRate", Engine.refreshRate);
@@ -828,8 +830,10 @@ void WriteSettings()
     ini.SetInteger("Keyboard 1", "Start", inputDevice[INPUT_START].keyMappings);
 
 #if RETRO_USING_SDL2
-    ini.SetComment("Controller 1", "IC1Comment",
-                   "Controller Mappings for P1 (Based on: https://github.com/libsdl-org/sdlwiki/blob/main/SDL_GameControllerButton.mediawiki)");
+    ini.SetComment("Controller 1", "IC1Comment1A", "Controller Mappings for P1 Based on 8BitDo's M30 Sega Genesis gamepad in Direct Input Mode (turn the controller on by holding B and pressing Start) are A=10, B=1, C=0");
+	ini.SetComment("Controller 1", "IC1Comment1B", "If using an 8BitDo M30 in X-Input Mode then A=23, B=1, C=0 (running the controller in X-Input Mode causes lag/delays on the D-pad");
+	ini.SetComment("Controller 1", "IC1Comment1C", "For non Sega Genesis controllers, A=0, B=1, C=2");
+	ini.SetComment("Controller 1", "IC1Comment", "For more info see: https://wiki.libsdl.org/SDL_GameControllerButton)");
     ini.SetComment("Controller 1", "IC1Comment2", "Extra buttons can be mapped with the following IDs:");
     ini.SetComment("Controller 1", "IC1Comment3", "CONTROLLER_BUTTON_ZL             = 16");
     ini.SetComment("Controller 1", "IC1Comment4", "CONTROLLER_BUTTON_ZR             = 17");
@@ -884,10 +888,7 @@ void ReadUserdata()
     if (!usingCWD)
         sprintf(buffer, "%s/%sUData.bin", redirectSave ? modsPath : getResourcesPath(), savePath);
     else
-        sprintf(buffer, "%s%sUData.bin", redirectSave ? modsPath : gamePath, savePath);
-#elif RETRO_PLATFORM == RETRO_OSX
-    sprintf(buffer, "%s/%sUData.bin", redirectSave ? modsPath : gamePath, savePath);
-#elif RETRO_PLATFORM == RETRO_iOS
+        sprintf(buffer, "a
     sprintf(buffer, "%s/%sUData.bin", redirectSave ? modsPath : getDocumentsPath(), savePath);
 //#elif RETRO_PLATFORM == RETRO_LINUX
   //  sprintf(buffer, "%s/%sUData.bin", redirectSave ? modsPath : getXDGDataPath().c_str(), savePath);

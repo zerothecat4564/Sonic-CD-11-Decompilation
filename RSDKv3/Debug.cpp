@@ -33,7 +33,7 @@ void InitDevMenu()
     AddTextMenuEntry(&gameMenu[0], " ");
     char version[0x80];
     StrCopy(version, Engine.gameWindowText);
-    StrAdd(version, " Version");
+    StrAdd(version, "");
     AddTextMenuEntry(&gameMenu[0], version);
     AddTextMenuEntry(&gameMenu[0], Engine.gameVersion);
     AddTextMenuEntry(&gameMenu[0], " ");
@@ -284,7 +284,7 @@ void ProcessStageSelect()
                 AddTextMenuEntry(&gameMenu[0], " ");
                 char version[0x80];
                 StrCopy(version, Engine.gameWindowText);
-                StrAdd(version, " Version");
+                StrAdd(version, "");
                 AddTextMenuEntry(&gameMenu[0], version);
                 AddTextMenuEntry(&gameMenu[0], Engine.gameVersion);
                 AddTextMenuEntry(&gameMenu[0], " ");
@@ -465,7 +465,7 @@ void ProcessStageSelect()
                 AddTextMenuEntry(&gameMenu[0], " ");
                 char version[0x80];
                 StrCopy(version, Engine.gameWindowText);
-                StrAdd(version, " Version");
+                StrAdd(version, "");
                 AddTextMenuEntry(&gameMenu[0], version);
                 AddTextMenuEntry(&gameMenu[0], Engine.gameVersion);
                 AddTextMenuEntry(&gameMenu[0], " ");
@@ -620,7 +620,7 @@ void ProcessStageSelect()
                 AddTextMenuEntry(&gameMenu[0], " ");
                 char version[0x80];
                 StrCopy(version, Engine.gameWindowText);
-                StrAdd(version, " Version");
+                StrAdd(version, "");
                 AddTextMenuEntry(&gameMenu[0], version);
                 AddTextMenuEntry(&gameMenu[0], Engine.gameVersion);
                 AddTextMenuEntry(&gameMenu[0], " ");
