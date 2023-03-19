@@ -1930,7 +1930,7 @@ void DrawStageGFX()
     DrawObjectList(5);
 #if !RETRO_USE_ORIGINAL_CODE
     // Hacky fix for Tails Object not working properly on non-Origins bytecode
-    if (forceUseScripts || GetGlobalVariableByName("NOTIFY_1P_VS_SELECT") != 0)
+    if (!Engine.usingBytecode || GetGlobalVariableByName("NOTIFY_1P_VS_SELECT") != 0)
 #endif
         DrawObjectList(7); // Extra Origins draw list (who knows why it comes before 6)
     DrawObjectList(6);
