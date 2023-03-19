@@ -471,7 +471,7 @@ void InitUserdata()
             Engine.language = RETRO_EN;
         if (!ini.GetInteger("Game", "GameType", &Engine.gameTypeID))
             Engine.gameTypeID = 0;
-        Engine.releaseType = Engine.gameTypeID ? "Use_Origins" : "Use_Standalone";
+        Engine.releaseType = Engine.gameTypeID ? "Use_Origins" : "Use_Restored";
 
         if (!ini.GetInteger("Game", "OriginalControls", &controlMode))
             controlMode = -1;
