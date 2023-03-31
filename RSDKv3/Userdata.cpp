@@ -785,7 +785,7 @@ void WriteSettings()
     ini.SetComment("Game", "DTCtrlComment", "Determines if the game should hide the touch controls UI");
     ini.SetBool("Game", "DisableTouchControls", disableTouchControls);
     ini.SetComment("Game", "DFPMenuComment",
-	"Handles pausing behaviour when focus is lost\n; 0 = Engine Pauses\n; 1 = Game Pauses\n; 2 = No Pause");
+	"Handles pausing behaviour when focus is lost\n; 0 = Engine Pauses\n; 1 = Game Pauses\n; 2 = Pause Disabled");
     ini.SetInteger("Game", "DisableFocusPause", disableFocusPause_Config);
     ini.SetComment("Game", "PlatformComment", "The platform type. 0 is standard (PC/Console), 1 is mobile");
     ini.SetInteger("Game", "Platform", !StrComp(Engine.gamePlatform, "Standard"));
