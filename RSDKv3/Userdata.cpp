@@ -357,7 +357,7 @@ void InitUserdata()
         ini.SetInteger("Game", "GameType", Engine.gameTypeID = 0);
         ini.SetInteger("Game", "OriginalControls", controlMode = -1);
         ini.SetBool("Game", "DisableTouchControls", disableTouchControls = false);
-        ini.SetInteger("Game", "DisableFocusPause", disableFocusPause = 2);
+        ini.SetInteger("Game", "DisableFocusPause", disableFocusPause = 1);
         disableFocusPause_Config = disableFocusPause;
 
         ini.SetBool("Window", "FullScreen", Engine.startFullScreen = true);
