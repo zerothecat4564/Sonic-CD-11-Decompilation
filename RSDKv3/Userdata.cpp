@@ -354,7 +354,6 @@ void InitUserdata()
         Engine.startStage_Game = Engine.startStage;
 
         ini.SetInteger("Game", "Language", Engine.language = RETRO_EN);
-        ini.SetInteger("Game", "GameType", Engine.gameTypeID = 0);
         ini.SetInteger("Game", "OriginalControls", controlMode = -1);
         ini.SetBool("Game", "DisableTouchControls", disableTouchControls = false);
         ini.SetInteger("Game", "DisableFocusPause", disableFocusPause = 1);
@@ -469,16 +468,13 @@ void InitUserdata()
 
         if (!ini.GetInteger("Game", "Language", &Engine.language))
             Engine.language = RETRO_EN;
-        if (!ini.GetInteger("Game", "GameType", &Engine.gameTypeID))
-            Engine.gameTypeID = 0;
-        Engine.releaseType = Engine.gameTypeID ? "Use_Origins" : "Use_Restored";
 
         if (!ini.GetInteger("Game", "OriginalControls", &controlMode))
             controlMode = -1;
         if (!ini.GetBool("Game", "DisableTouchControls", &disableTouchControls))
             disableTouchControls = false;
         if (!ini.GetInteger("Game", "DisableFocusPause", &disableFocusPause))
-            disableFocusPause = 1;
+            disableFocusPause = 0;
         disableFocusPause_Config = disableFocusPause;
 
         int platype = -1;
@@ -778,8 +774,6 @@ void WriteSettings()
 
     ini.SetComment("Game", "LangComment", "Sets the game language (0 = EN, 1 = FR, 2 = IT, 3 = DE, 4 = ES, 5 = JP)");
     ini.SetInteger("Game", "Language", Engine.language);
-    ini.SetComment("Game", "GameTypeComment", "Determines game type in scripts (0 = Standalone/Original releases, 1 = Origins release)");
-    ini.SetInteger("Game", "GameType", Engine.gameTypeID);
     ini.SetComment("Game", "OGCtrlComment", "Sets the game's spindash style (-1 = let save file decide, 0 = S2, 1 = CD)");
     ini.SetInteger("Game", "OriginalControls", controlMode);
     ini.SetComment("Game", "DTCtrlComment", "Determines if the game should hide the touch controls UI");

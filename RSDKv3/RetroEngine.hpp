@@ -477,7 +477,7 @@ public:
 #endif
 
     int gameTypeID          = 0;
-    const char *releaseType = "Use_Standalone";
+    const char *releaseType = "Use_Restored";
 
     ushort *frameBuffer   = nullptr;
     ushort *frameBuffer2x = nullptr;
