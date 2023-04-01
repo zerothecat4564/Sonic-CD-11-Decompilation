@@ -474,7 +474,7 @@ void InitUserdata()
         if (!ini.GetBool("Game", "DisableTouchControls", &disableTouchControls))
             disableTouchControls = false;
         if (!ini.GetInteger("Game", "DisableFocusPause", &disableFocusPause))
-            disableFocusPause = 0;
+            disableFocusPause = 1;
         disableFocusPause_Config = disableFocusPause;
 
         int platype = -1;
