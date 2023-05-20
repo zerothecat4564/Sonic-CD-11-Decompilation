@@ -137,7 +137,7 @@ bool ProcessEvents()
                     case SDLK_F1:
                         if (Engine.devMenu) {
                             activeStageList   = 0;
-                            stageListPosition = 0;
+                            stageListPosition = 3;
                             stageMode         = STAGEMODE_LOAD;
                             Engine.gameMode   = ENGINE_MAINGAME;
                         }
@@ -189,6 +189,8 @@ bool ProcessEvents()
                         if (Engine.devMenu) {
                             currentStageFolder[0] = 0; // reload all assets & scripts
                             stageMode             = STAGEMODE_LOAD;
+                            SetGlobalVariableByName("LampPost.Check", 0);
+                            SetGlobalVariableByName("Warp.XPos", 0);
                         }
                         break;
 
