@@ -140,6 +140,8 @@ bool ProcessEvents()
                             stageListPosition = 3;
                             stageMode         = STAGEMODE_LOAD;
                             Engine.gameMode   = ENGINE_MAINGAME;
+                            SetGlobalVariableByName("LampPost.Check", 0);
+                            SetGlobalVariableByName("Warp.XPos", 0);
                         }
                         break;
 
