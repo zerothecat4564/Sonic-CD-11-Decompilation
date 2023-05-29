@@ -1,4 +1,8 @@
 #include "RetroEngine.hpp"
+#if WINAPI_FAMILY
+#include <windows.h>
+#include <shellapi.h>
+#endif
 #if RETRO_PLATFORM == RETRO_UWP
 #include <winrt/base.h>
 #include <winrt/Windows.Storage.h>
@@ -136,6 +140,7 @@ bool ProcessEvents()
 
                     case SDLK_F1:
                         if (Engine.devMenu) {
+							PauseSound();
                             activeStageList   = 0;
                             stageListPosition = 3;
                             stageMode         = STAGEMODE_LOAD;
@@ -146,7 +151,9 @@ bool ProcessEvents()
                         break;
 
                     case SDLK_F2:
+						PauseSound();
                         if (Engine.devMenu) {
+							PauseSound();
                             stageListPosition--;
                             if (stageListPosition < 0) {
                                 activeStageList--;
@@ -165,6 +172,7 @@ bool ProcessEvents()
 
                     case SDLK_F3:
                         if (Engine.devMenu) {
+							PauseSound();
                             stageListPosition++;
                             if (stageListPosition >= stageListCount[activeStageList]) {
                                 activeStageList++;
@@ -189,6 +197,7 @@ bool ProcessEvents()
 
                     case SDLK_F5:
                         if (Engine.devMenu) {
+							PauseSound();
                             currentStageFolder[0] = 0; // reload all assets & scripts
                             stageMode             = STAGEMODE_LOAD;
                             SetGlobalVariableByName("LampPost.Check", 0);
@@ -1132,7 +1141,10 @@ void RetroEngine::Callback(int callbackID)
             break;
         case CALLBACK_TRIAL_ENDED:
             if (bytecodeMode == BYTECODE_PC) {
-                PrintLog("Callback: ???");
+                ShellExecute(0, 0, L"https://www.speedrun.com/scd_restored", 0, 0 , SW_SHOW );
+				
+				Engine.isFullScreen = 0;
+				SDL_MinimizeWindow(Engine.window);
             }
             else {
                 if (Engine.trialMode) {
