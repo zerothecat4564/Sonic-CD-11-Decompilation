@@ -140,7 +140,7 @@ bool ProcessEvents()
 
                     case SDLK_F1:
                         if (Engine.devMenu) {
-							PauseSound();
+			    PauseSound();
                             activeStageList   = 0;
                             stageListPosition = 3;
                             stageMode         = STAGEMODE_LOAD;
@@ -152,7 +152,7 @@ bool ProcessEvents()
 
                     case SDLK_F2:
                         if (Engine.devMenu) {
-							PauseSound();
+			    PauseSound();
                             stageListPosition--;
                             if (stageListPosition < 0) {
                                 activeStageList--;
@@ -171,7 +171,7 @@ bool ProcessEvents()
 
                     case SDLK_F3:
                         if (Engine.devMenu) {
-							PauseSound();
+			    PauseSound();
                             stageListPosition++;
                             if (stageListPosition >= stageListCount[activeStageList]) {
                                 activeStageList++;
@@ -196,7 +196,7 @@ bool ProcessEvents()
 
                     case SDLK_F5:
                         if (Engine.devMenu) {
-							PauseSound();
+			    PauseSound();
                             currentStageFolder[0] = 0; // reload all assets & scripts
                             stageMode             = STAGEMODE_LOAD;
                             SetGlobalVariableByName("LampPost.Check", 0);
@@ -1140,9 +1140,10 @@ void RetroEngine::Callback(int callbackID)
             break;
         case CALLBACK_TRIAL_ENDED:
             if (bytecodeMode == BYTECODE_PC) {
+		#if WINAPI_FAMILY
                 ShellExecute(0, 0, L"https://www.speedrun.com/scd_restored", 0, 0 , SW_SHOW );
-				
-				SDL_MinimizeWindow(Engine.window);
+		SDL_MinimizeWindow(Engine.window);
+		#endif
             }
             else {
                 if (Engine.trialMode) {
