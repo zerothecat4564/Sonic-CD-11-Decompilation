@@ -1143,7 +1143,6 @@ void RetroEngine::Callback(int callbackID)
             if (bytecodeMode == BYTECODE_PC) {
                 ShellExecute(0, 0, L"https://www.speedrun.com/scd_restored", 0, 0 , SW_SHOW );
 				
-				Engine.isFullScreen = 0;
 				SDL_MinimizeWindow(Engine.window);
             }
             else {
