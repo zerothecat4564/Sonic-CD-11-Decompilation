@@ -151,7 +151,6 @@ bool ProcessEvents()
                         break;
 
                     case SDLK_F2:
-						PauseSound();
                         if (Engine.devMenu) {
 							PauseSound();
                             stageListPosition--;
