@@ -12,7 +12,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         if (buildAsApplication) {
-            applicationId "com.decomp.rsdkv3"
+            applicationId "com.decomp.restored"
         }
         minSdkVersion 23
         targetSdkVersion 29
